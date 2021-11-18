@@ -8,9 +8,20 @@ import Word from './components/Word';
 import WrongLetters from './components/WrongLetters';
 import { show } from './helpers/Helpers';
 
-const words = ['strawberry', 'friendship', 'everything', 'appreciate', 'motivation'];
+let selectedWord = 's';
 
-let selectedWord = words[Math.floor(Math.random() * words.length)];
+console.log('Before: ', selectedWord);
+
+async function getData() {
+  const res = await fetch('https://random-word-api.herokuapp.com/word?number=10');
+  var words = await res.json();
+
+  selectedWord = words[0];
+}
+getData();
+
+console.log('After: ', selectedWord);
+
 
 function App() {
   const [playable, setPlayable] = useState(true);
@@ -52,8 +63,7 @@ function App() {
     //empty arrs
     setCorrectLetters([]);
     setWrongLetters([]);
-    const random = Math.floor(Math.random() * words.length);
-    selectedWord = words[random];
+    getData();
   }
 
   return (
